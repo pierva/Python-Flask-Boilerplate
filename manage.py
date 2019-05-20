@@ -47,3 +47,45 @@ def create_db():
 def drop_db():
     """Drops the db tables."""
     db.drop_all()
+
+
+@manager.command
+def create_admin():
+    """Creates the admin user."""
+    db.session.add(User(
+        email="admin@carnival.com",
+        username="Test_AdminUser",
+        password="Admin1234",
+        admin=True,
+        first_login=False)
+    )
+    db.session.commit()
+
+
+@manager.command
+def create_user():
+    """Creates a non admin user."""
+    db.session.add(User(
+        email="nonadmin@carnival.com",
+        username="Test_NonAdminUser",
+        password="Nonadmin1234",
+        admin=False)
+    )
+    db.session.commit()
+
+
+@manager.command
+def delete_test_users():
+    """Delete the Admin and NonAdmin users."""
+    try:
+        stmt = User.__table__.delete().where(User.username.contains('Test_'))
+        db.session.execute(stmt)
+        db.session.commit()
+        print('Deleted test users')
+    except Exception as e:
+        print(e)
+        print('Unable to delete users')
+
+
+if __name__ == '__main__':
+    manager.run()
