@@ -2,7 +2,6 @@
 
 import os
 import unittest
-import datetime
 import logging
 
 from logging.handlers import RotatingFileHandler
@@ -53,11 +52,9 @@ def drop_db():
 def create_admin():
     """Creates the admin user."""
     db.session.add(User(
-        email="admin@carnival.com",
-        username="Test_AdminUser",
+        email="test_admin@domain.com",
         password="Admin1234",
-        admin=True,
-        first_login=False)
+        admin=True)
     )
     db.session.commit()
 
@@ -66,8 +63,7 @@ def create_admin():
 def create_user():
     """Creates a non admin user."""
     db.session.add(User(
-        email="nonadmin@carnival.com",
-        username="Test_NonAdminUser",
+        email="test_nonadmin@domain.com",
         password="Nonadmin1234",
         admin=False)
     )
@@ -78,7 +74,7 @@ def create_user():
 def delete_test_users():
     """Delete the Admin and NonAdmin users."""
     try:
-        stmt = User.__table__.delete().where(User.username.contains('Test_'))
+        stmt = User.__table__.delete().where(User.email.contains('test_'))
         db.session.execute(stmt)
         db.session.commit()
         print('Deleted test users')
@@ -94,7 +90,6 @@ def reset_user_password(email):
         if user:
             user.password = flask_bcrypt.generate_password_hash('Temp1234')\
                 .decode('utf-8')
-            user.first_login = True
             db.session.add(user)
             db.session.commit()
             print('temporary password for {} is "Temp1234"'.format(user.email))
