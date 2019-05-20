@@ -103,5 +103,24 @@ def reset_user_password(email):
         print('Unable to reset password for {}'.format(email))
 
 
+@manager.command
+def delete_user(email):
+    try:
+        user = User.query.filter_by(email=email.lower().strip()).one()
+        if user:
+            print('Are you sure you want to delete the user {}'
+                  .format(user.email))
+            answer = input('Answer y or n \n').lower().strip()
+            if answer == 'y':
+                db.session.delete(user)
+                db.session.commit()
+                print('User successfully deleted')
+            else:
+                print('User not deleted')
+    except Exception as e:
+        print('Unable to delete user with email {}'.format(email))
+        print(e)
+
+
 if __name__ == '__main__':
     manager.run()
