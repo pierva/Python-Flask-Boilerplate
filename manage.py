@@ -87,5 +87,21 @@ def delete_test_users():
         print('Unable to delete users')
 
 
+@manager.command
+def reset_user_password(email):
+    try:
+        user = User.query.filter_by(email=email.lower().strip()).one()
+        if user:
+            user.password = flask_bcrypt.generate_password_hash('Temp1234')\
+                .decode('utf-8')
+            user.first_login = True
+            db.session.add(user)
+            db.session.commit()
+            print('temporary password for {} is "Temp1234"'.format(user.email))
+    except Exception as e:
+        print(e)
+        print('Unable to reset password for {}'.format(email))
+
+
 if __name__ == '__main__':
     manager.run()
