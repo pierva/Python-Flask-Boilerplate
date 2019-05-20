@@ -1,0 +1,17 @@
+<div class="container mb-3 flash-container" role="alert">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          <a class="close" title="Close" href="#" data-dismiss="alert">&times;</a>
+         {{message}}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+
+<!-- errors -->
+{% if error %}
+  <p class="error"><strong>Error:</strong> {{ error }}</p>
+{% endif %}
