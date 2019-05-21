@@ -22,8 +22,8 @@ class DevelopmentConfig(BaseConfig):
     """Development configuration."""
     DEBUG = True
     WTF_CSRF_ENABLED = False
-    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.sqlite')
-    SQLALCHEMY_DATABASE_URI = 'postgresql://user:password@localhost/databaseName'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'dev.sqlite')
+    # SQLALCHEMY_DATABASE_URI = 'postgresql://user:password@localhost/databaseName'
     DEBUG_TB_ENABLED = True
 
 
