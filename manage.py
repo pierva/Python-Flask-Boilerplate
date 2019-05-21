@@ -27,7 +27,7 @@ manager.add_command('runserver', Server(host='0.0.0.0', port=5000))
 
 @manager.command
 def test():
-    """Runs the unit tests without coverage."""
+    """Runs the unit tests without coverage"""
     tests = unittest.TestLoader().discover('tests')
     result = unittest.TextTestRunner(verbosity=2).run(tests)
     if result.wasSuccessful():
@@ -38,19 +38,19 @@ def test():
 
 @manager.command
 def create_db():
-    """Creates the db tables."""
+    """Creates the db tables"""
     db.create_all()
 
 
 @manager.command
 def drop_db():
-    """Drops the db tables."""
+    """Drops the db tables"""
     db.drop_all()
 
 
 @manager.command
 def create_admin():
-    """Creates the admin user."""
+    """Creates the admin test user (test_admin@domain.com)"""
     db.session.add(User(
         email="test_admin@domain.com",
         password="Admin1234",
@@ -61,7 +61,7 @@ def create_admin():
 
 @manager.command
 def create_user():
-    """Creates a non admin user."""
+    """Creates a non admin test user (test_nonadmin@domain.com)"""
     db.session.add(User(
         email="test_nonadmin@domain.com",
         password="Nonadmin1234",
@@ -72,7 +72,7 @@ def create_user():
 
 @manager.command
 def delete_test_users():
-    """Delete the Admin and NonAdmin users."""
+    """Delete the Admin and NonAdmin testing users"""
     try:
         stmt = User.__table__.delete().where(User.email.contains('test_'))
         db.session.execute(stmt)
@@ -85,6 +85,7 @@ def delete_test_users():
 
 @manager.command
 def reset_user_password(email):
+    """Reset the password of a given user. The user email must be provided"""
     try:
         user = User.query.filter_by(email=email.lower().strip()).one()
         if user:
@@ -100,6 +101,8 @@ def reset_user_password(email):
 
 @manager.command
 def delete_user(email):
+    """Deletes a specific user. Email of the user to be deleted should be
+       provided"""
     try:
         user = User.query.filter_by(email=email.lower().strip()).one()
         if user:
