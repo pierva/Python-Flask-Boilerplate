@@ -13,7 +13,7 @@ This boilerplate includes the following libraries:
 The application follows the below structure:
 
 ```
-root directory/
+root_directory/
   manage.py
   requirements.txt
   set_production.sh
@@ -60,7 +60,24 @@ root directory/
     test_config.py
     test_main.py
     test_user.py
-
-
-
 ```
+
+## Get started... quickly
+
+Once you have cloned the repository, created your virtual environment, you can proceed installing all the required dependencies with the following command:
+```sh
+$ sudo pip install -r requirements.txt
+```
+
+Before running the server you need to set the environment variable.
+```sh
+$ export APP_SETTINGS="application.config.DevelopmentConfig"
+```
+
+or (for testing)
+
+```sh
+$ export APP_SETTINGS="application.config.TestingConfig"
+```
+
+This environment variable will tell the application which configuration should be used.
