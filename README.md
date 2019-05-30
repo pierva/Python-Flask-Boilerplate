@@ -133,3 +133,31 @@ $ python3 manage.py reset_user_password email@domain.com
 # Delete a specific user. Email address of the user to be deleted should be provided.
 $ python3 manage.py delete_user email@domain.com
 ```
+
+## The model
+The basic database setup (table and columns) is included in the file called `models.py` inside the `application` folder.
+The objec-relational mapper used in this boilerplate is SQLAlchemy.
+
+The SQLAlchemy class is bound to the application instance `app` in a variable called `db`.
+
+Therefore to use the SQLAlchemy wrapper in any file of the application you simply need to add the following import:
+```python
+from application import db
+```
+
+The model that comes included in the boilerplate is the `User` model. The table is called `user` and has the following columns:
+```python
+id (primary key)
+email # (50 chars)
+password # (64 chars hashed with flask_bcrypt)
+registered_on # Datetime = default now
+admin # Boolean - default False
+```
+
+The `User` model also includes the serialize method called `serialize_user` that returns the following object:
+```python
+{
+  'id': self.id,
+  'email': self.email
+}
+```
