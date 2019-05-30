@@ -88,3 +88,48 @@ $ python3 manage.py runserver
 ```
 
 The above command will start the flask server with the configuration set in the `APP_SETTINGS` variable (don't use this command for production)
+
+
+## manage.py commands
+The `manage.py` file uses flask's 'Manager' class to bind the application and then adding commands with the `manager.command` decorator.
+
+The available commands are:
+
+```sh
+# Run tests without coverage
+$ python3 manage.py test  
+```
+```sh
+# Create the database tables
+$ python3 manage.py create_db
+```
+```sh
+# Drop the database tables
+$ python3 manage.py drop_db
+```
+```sh
+# Create the admin testing user with following properties
+# email = test_admin@domain.com
+# password = Admin1234
+# admin = True
+$ python3 manage.py create_admin
+```
+```sh
+# Create the non-admin testing user with following properties:
+# email = test_nonadmin@domain.com
+# password = Admin1234
+# admin = False
+$ python3 manage.py create_user
+```
+```sh
+# Delete the testing users (admin and non admin)
+$ python3 manage.py delete_test_users
+```
+```sh
+# Reset the user password. The email should be provided to the command
+$ python3 manage.py reset_user_password email@domain.com
+```
+```sh
+# Delete a specific user. Email address of the user to be deleted should be provided.
+$ python3 manage.py delete_user email@domain.com
+```
