@@ -81,3 +81,10 @@ $ export APP_SETTINGS="application.config.TestingConfig"
 ```
 
 This environment variable will tell the application which configuration should be used.
+
+To run the server enter the following command:
+```sh
+$ python3 manage.py runserver
+```
+
+The above command will start the flask server with the configuration set in the `APP_SETTINGS` variable (don't use this command for production)
