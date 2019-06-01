@@ -161,3 +161,33 @@ The `User` model also includes the serialize method called `serialize_user` that
   'email': self.email
 }
 ```
+
+## Production configuration
+For production environment there is a shell file that will create the required folders and files and change the permits on those folder in order for the logger to write. This configuration file was created assuming the application will be running on an Apache Server.
+To run the shell commands, type the following (assuming you are in the root folder of this boilerplate):
+```sh
+$ sudo bash set_production.sh
+```
+
+The above command will perform the below actions:
+```sh
+export APP_SETTINGS='application.config.ProductionConfig'
+
+
+mkdir application/instance
+touch application/instance/production.cfg
+mkdir log
+touch log/error.log
+chgrp www-data log
+chgrp www-data log/error.log
+chmod 700 log
+chmod 664 log/error.log
+```
+
+For production environment it is not recommended to have environment variable, therefore instead of using the `APP_SETTINGS` variable, it is better to change the `__init__.py` inside the `application` directory. We should comment the line that reads the configuration from the environment variable and hard code it to be the production one. The file should look like the one below. We simply need to comment one line (the first one in the below snippet) and uncomment another one (the third one in the below snippet)
+
+```python
+# app.config.from_object(os.environ['APP_SETTINGS'])
+# For production
+app.config.from_object("application.config.ProductionConfig")
+```
