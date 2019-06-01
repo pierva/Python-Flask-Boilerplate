@@ -191,3 +191,13 @@ For production environment it is not recommended to have environment variable, t
 # For production
 app.config.from_object("application.config.ProductionConfig")
 ```
+
+Other than the log directory and error log file, the shell script will also create the `instance` directory and the `production.cfg` file. In this last file you will need to add the production keys. Open the file and add the below:
+```cfg
+[keys]
+SECRET_KEY=your_super_secret_key
+SECURITY_PASSWORD_SALT=your_password_salt
+SQLALCHEMY_DATABASE_URI=postgresql://username:password@host:port/database
+```
+
+The application will automatically override the default settings with the values in the configuration file.
